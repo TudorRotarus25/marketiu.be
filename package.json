@@ -9,6 +9,7 @@
   "author": "Tudor Rotarus",
   "license": "ISC",
   "dependencies": {
+    "aws-serverless-express": "^3.2.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "express": "^4.16.1",

@@ -1,12 +1,27 @@
-const getBlogArticle = (req, res) => {
-  return res.json({
-    'success': true,
-  });
-};
+const BlogModel = require('../Models/BlogModel');
 
-const getAllArticles = (req, res) => {
-  return res.json({});
-};
+class BlogController {
+  /**
+   * Get an article
+   * @param req
+   * @param res
+   * @returns {*}
+   */
+  static getBlogArticle(req, res) {
+    return res.json({});
+  };
 
-exports.getBlogArticle = getBlogArticle;
-exports.getAllArticles = getAllArticles;
+  /**
+   * Get a list of all the articles
+   * @param req
+   * @param res
+   * @returns {*}
+   */
+  static getAllArticles(req, res) {
+    const articles = BlogModel.getAllArticles();
+    return res.json(articles);
+  };
+}
+
+module.exports = BlogController;
+

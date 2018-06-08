@@ -6,4 +6,5 @@ module.exports = function(app) {
 
   app.route('/blog/get/:articlePath/')
     .get(BlogController.getBlogArticle);
-}
+};
+
