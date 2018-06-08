@@ -8,7 +8,11 @@ class BlogController {
    * @returns {*}
    */
   static getBlogArticle(req, res) {
-    return res.json({});
+    const articlePath = req.params.articlePath;
+
+    return res.json({
+      articlePath,
+    });
   };
 
   /**
@@ -17,8 +21,9 @@ class BlogController {
    * @param res
    * @returns {*}
    */
-  static getAllArticles(req, res) {
-    const articles = BlogModel.getAllArticles();
+  static async getAllArticles(req, res) {
+    const articles = await BlogModel.getAllArticles();
+
     return res.json(articles);
   };
 }

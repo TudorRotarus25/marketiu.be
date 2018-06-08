@@ -3,6 +3,9 @@ const app = new express();
 const bodyParser = require('body-parser');
 const http = require('http').Server(app);
 const router = require('./routes.js');
+const dynamo = require('dynamodb');
+
+dynamo.AWS.config.loadFromPath('awsCredentials.json');
 
 http.listen(4848, '127.0.0.1');
 
