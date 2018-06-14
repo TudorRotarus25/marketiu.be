@@ -4,19 +4,30 @@
   "description": "Serverless Node js application running in AWS Lambda",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon ./src/app.js --exec babel-node -e js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Tudor Rotarus",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "git://github.com/aws/aws-sdk-js.git",
     "aws-serverless-express": "^3.2.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
+    "dtrace-provider": "^0.8.7",
     "dynamodb": "^1.1.2",
     "express": "^4.16.1",
     "joi": "^13.4.0",
     "jsonwebtoken": "^8.0.1",
+    "lodash": "^4.17.10",
+    "morgan": "^1.9.0",
     "multer": "^1.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "nodemon": "^1.17.5"
   }
 }

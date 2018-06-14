@@ -7,12 +7,10 @@ class BlogController {
    * @param res
    * @returns {*}
    */
-  static getBlogArticle(req, res) {
+  static async getBlogArticle(req, res) {
     const articlePath = req.params.articlePath;
-
-    return res.json({
-      articlePath,
-    });
+    const article = await BlogModel.getArticleByIdentifier(articlePath);
+    return res.json(article);
   };
 
   /**
@@ -22,7 +20,7 @@ class BlogController {
    * @returns {*}
    */
   static async getAllArticles(req, res) {
-    const articles = await BlogModel.getAllArticles();
+    const articles = await BlogModel.getAllArticles(3);
 
     return res.json(articles);
   };
