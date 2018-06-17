@@ -1,5 +1,7 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
+import compression from 'compression';
+import helmet from 'helmet';
 import BlogRouter from './router/BlogRouter';
 import TestimonialsRouter from './router/TestimonialsRouter';
 
@@ -10,6 +12,8 @@ const buildUrl = (version, path) => `/api/v${version}/${path}`;
 // parse application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(compression());
+app.use(helmet());
 
 app.use((req, res, next) => {
   // Website you wish to allow to connect
@@ -32,6 +36,6 @@ app.use((req, res, next) => {
 app.use(buildUrl(1, 'blog'), BlogRouter);
 app.use(buildUrl(1, 'testimonials'), TestimonialsRouter);
 
-const server = app.listen(4000, () => {
-  console.log('Listening on 4000...');
+const server = app.listen(8080, () => {
+  console.log('Listening on 8080...');
 });
