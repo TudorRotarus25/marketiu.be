@@ -1,4 +1,4 @@
-const articlesData = require('../staticData/blogArticles');
+import KnexAdapter from '../adapters/KnexAdapter';
 
 class BlogModel {
   /**
@@ -7,15 +7,17 @@ class BlogModel {
    * @returns {Promise}
    */
   static getAllArticles(limit) {
-    return Promise.resolve(
-      articlesData.map(article => ({
-        image: article.image,
-        title: article.title,
-        identifier: article.identifier,
-        description: article.description,
+    const knexAdapter = new KnexAdapter();
 
-      }))
-    );
+    const query = knexAdapter.getConnection()
+      .select('identifier', { image: 'header_image' }, 'title', { description: 'short_description' })
+      .orderBy('order')
+      .from('marketiu_blogarticle');
+
+    if (limit) {
+      return query.limit(limit);
+    }
+    return query;
   }
 
   /**
@@ -24,11 +26,18 @@ class BlogModel {
    * @returns {Promise}
    */
   static getArticleByIdentifier(identifier) {
-    return Promise.resolve(
-      articlesData.find(article => {
-        return article.identifier = identifier;
-      })
-    );
+    const knexAdapter = new KnexAdapter();
+
+    return knexAdapter.getConnection()
+      .select('identifier', { image: 'header_image' }, 'title', { description: 'short_description' }, 'content')
+      .from('marketiu_blogarticle')
+      .where('identifier', identifier)
+      .then((rows) => {
+        if (rows.length === 1) {
+          return rows[0];
+        }
+        return null;
+      });
   }
 }
 

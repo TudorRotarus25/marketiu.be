@@ -10,7 +10,14 @@ class BlogController {
   static async getBlogArticle(req, res) {
     const articlePath = req.params.articlePath;
     const article = await BlogModel.getArticleByIdentifier(articlePath);
-    return res.json(article);
+
+    if (article) {
+      return res.json(article);
+    } else {
+      return res.status(404).json({
+        'error': 'Article not found',
+      });
+    }
   };
 
   /**
@@ -20,7 +27,8 @@ class BlogController {
    * @returns {*}
    */
   static async getAllArticles(req, res) {
-    const articles = await BlogModel.getAllArticles(3);
+    const limit = req.query.limit;
+    const articles = await BlogModel.getAllArticles(limit);
 
     return res.json(articles);
   };

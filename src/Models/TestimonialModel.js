@@ -1,4 +1,4 @@
-const testimonialsData = require('../staticData/testimonials');
+import KnexAdapter from '../adapters/KnexAdapter';
 
 class TestimonialModel {
   /**
@@ -6,7 +6,12 @@ class TestimonialModel {
    * @returns {Promise}
    */
   static getAllTestimonials() {
-    return Promise.resolve(testimonialsData);
+    const knexAdapter = new KnexAdapter();
+
+    return knexAdapter.getConnection()
+      .select('id', { image: 'logo' }, { clientName: 'name' }, { clientDescription: 'business_type' }, 'testimonial')
+      .orderBy('order')
+      .from('marketiu_client');
   }
 
   /**
@@ -15,13 +20,19 @@ class TestimonialModel {
    * @returns {Promise}
    */
   static getTestimonialById(id) {
+    const knexAdapter = new KnexAdapter();
     const intId = parseInt(id, 10);
 
-    return Promise.resolve(
-      testimonialsData.find((element) => {
-        return element.id === intId;
-      })
-    )
+    return knexAdapter.getConnection()
+      .select('id', { image: 'logo' }, { clientName: 'name' }, { clientDescription: 'business_type' }, 'testimonial')
+      .from('marketiu_client')
+      .where('id', intId)
+      .then((rows) => {
+        if (rows.length === 1) {
+          return rows[0];
+        }
+        return null;
+      });
   }
 }
 

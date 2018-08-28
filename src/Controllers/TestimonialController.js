@@ -9,6 +9,7 @@ class TestimonialController {
    */
   static async getAllTestimonials(req, res) {
     const testimonials = await TestimonialModel.getAllTestimonials();
+
     return res.json(testimonials);
   }
 
@@ -21,7 +22,13 @@ class TestimonialController {
   static async getTestimonial(req, res) {
     const id = req.params.id;
     const testimonial = await TestimonialModel.getTestimonialById(id);
-    return res.json(testimonial);
+
+    if (testimonial) {
+      return res.json(testimonial);
+    }
+    return res.status(404).json({
+      error: 'Testimonial does not exist',
+    });
   }
 }
 
